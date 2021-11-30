@@ -3,7 +3,7 @@ package org.laolittle.plugin.caiyun
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import net.mamoe.mirai.event.GlobalEventChannel
-import net.mamoe.mirai.event.subscribeMessages
+import net.mamoe.mirai.event.subscribeFriendMessages
 import net.mamoe.mirai.event.whileSelectMessages
 import net.mamoe.mirai.message.data.content
 import net.mamoe.mirai.utils.info
@@ -23,7 +23,7 @@ object CaiyunAI : KotlinPlugin(
     override fun onEnable() {
         logger.info { "Plugin loaded" }
         Config.reload()
-        GlobalEventChannel.subscribeMessages {
+        GlobalEventChannel.subscribeFriendMessages {
             "#登录" {
                 subject.sendMessage("请输入你的手机号")
                 whileSelectMessages {
