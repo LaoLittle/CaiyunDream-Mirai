@@ -1,0 +1,27 @@
+POST https://if.caiyunai.com/v2/novel/6198dd040e13ac54b7ba8cfc/novel_ai
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+Connection: keep-alive
+Content-Type: application/json;charset=UTF-8
+//Cookie: _ga=GA1.1.283587862.1637407986; UM_distinctid=17d3d1f159a795-0d16025d780be7-561a1154-1fa400-17d3d1f159bd87; _ga_6M8VVW197Y=GS1.1.1637407986.1.1.1637408234.0; CNZZDATA1279663927=762228946-1637407224-%7C1638193426
+Host: if.caiyunai.com
+Origin: https://if.caiyunai.com
+Referer: https://if.caiyunai.com/dream/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.34
+
+{
+  "nid": "61a50147499eebd355a353a7",
+  "content": "我在阿拉伯",
+  "uid": "",
+  "mid": "60094a2a9661080dc490f75a",
+  "title": "我是谁",
+  "status": "http",
+  "storyline": false,
+  "lastnode": "61a50147499eebd355a353a8",
+  "branchid": "61a50147499eebd355a353a9",
+  "ostype": "",
+  "lang": "zh"
+}
+
+###
