@@ -17,7 +17,7 @@ object CaiyunAI : KotlinPlugin(
     JvmPluginDescription(
         id = "org.laolittle.plugin.caiyun.CaiyunAI",
         name = "CaiyunAI",
-        version = "1.0",
+        version = "1.0.1",
     ) {
         author("LaoLittle")
     }
@@ -28,7 +28,7 @@ object CaiyunAI : KotlinPlugin(
         if (userId == "") logger.info { "请私聊机器人登录彩云小梦" }
         else GroupMessageListener.start()
         GlobalEventChannel.subscribeFriendMessages {
-            "#登录" {
+            "#登录" Login@{
                 var codeId = ""
                 var phoneNumber: Long = 0
                 subject.sendMessage("请在2分钟内输入你的手机号")
@@ -52,6 +52,7 @@ object CaiyunAI : KotlinPlugin(
                         false
                     }
                 }
+                if (codeId == "") return@Login
                 subject.sendMessage("请在5分钟内输入你所收到的验证码")
                 whileSelectMessages {
                     default Here@{
@@ -68,7 +69,6 @@ object CaiyunAI : KotlinPlugin(
                     }
                 }
             }
-
         }
     }
 }
