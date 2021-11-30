@@ -35,7 +35,7 @@ data class NodeId(
 
 @Serializable
 data class Novel(
-
+    @SerialName("nodeid") val nodeId: String,
     @SerialName("content") val content: String
 )
 
@@ -47,7 +47,7 @@ data class Nodes(
 @Serializable
 data class CaiyunStatus(
     @SerialName("status") val status: String,
-    @SerialName("msg") val message: String?,
+    @SerialName("msg") val message: String,
 )
 
 internal val Json = Json {
