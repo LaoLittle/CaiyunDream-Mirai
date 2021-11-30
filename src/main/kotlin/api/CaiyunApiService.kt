@@ -13,7 +13,7 @@ import javax.net.ssl.HttpsURLConnection
 @ExperimentalSerializationApi
 object CaiyunApiService {
 
-    fun startWrite(title: String, text: String, nodeId: String, novelId: String): String {
+    fun startWrite(title: String, text: String, nodeId: String, novelId: String): Novel {
         val conn = setConnection("https://if.caiyunai.com/v2/novel/$userId/novel_ai")
 
         val out = DataOutputStream(conn.outputStream)
@@ -21,7 +21,7 @@ object CaiyunApiService {
             put("content", text)
             put("lang", "zh")
             put("lastnode", nodeId)
-            put("mid", "60094a2a9661080dc490f75a")
+            put("mid", "601f92f60c9aaf5f28a6f908")
             put("nid", novelId)
             put("ostype", "")
             put("status", "http")
@@ -40,11 +40,10 @@ object CaiyunApiService {
         val jsonStr = getString(conn.inputStream)
         val data = Json.decodeFromString<Data>(jsonStr).data
         val nodes = Json.decodeFromJsonElement<Nodes>(data).nodes
-        val novel: Novel = Json.decodeFromString(nodes[0].toString())
-        return novel.content
+        return Json.decodeFromJsonElement(nodes[0])
     }
 
-    fun getNovelId(title: String, text: String, nodeId: Boolean, putNodes: JsonArray = buildJsonArray { }): String {
+    fun getNovelInfo(title: String, text: String, nodeId: Boolean, putNodes: JsonArray = buildJsonArray { }): String {
         val conn = setConnection("https://if.caiyunai.com/v2/novel/$userId/novel_save")
 
         val out = DataOutputStream(conn.outputStream)
@@ -96,8 +95,15 @@ object CaiyunApiService {
         conn.disconnect()
 
         val jsonStr = getString(conn.inputStream)
-        val returnData: Data = Json.decodeFromString(jsonStr)
-        val code: PhoneMessage = Json.decodeFromJsonElement(returnData.data)
+        val returnData: Data
+        val code: PhoneMessage
+        try {
+            returnData = Json.decodeFromString(jsonStr)
+            code = Json.decodeFromJsonElement(returnData.data)
+        }catch (e: Exception){
+            val caiyunStatus: CaiyunStatus = Json.decodeFromString(jsonStr)
+            return caiyunStatus.message
+        }
         return code.codeId
     }
 
@@ -126,7 +132,6 @@ object CaiyunApiService {
         val userInfo: Data
         try {
             userInfo = Json.decodeFromString(jsonStr)
-
         } catch (e: Exception) {
             return "登录失败，请检查验证码是否正确"
         }
@@ -139,7 +144,6 @@ object CaiyunApiService {
         val connection = URL(Url).openConnection() as HttpsURLConnection
 
         connection.requestMethod = "POST"
-        connection.connectTimeout = 5000
         connection.doOutput = true
         connection.useCaches = false
         connection.instanceFollowRedirects = true
