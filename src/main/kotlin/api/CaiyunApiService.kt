@@ -12,7 +12,6 @@ import javax.net.ssl.HttpsURLConnection
 
 @ExperimentalSerializationApi
 object CaiyunApiService {
-
     fun startWrite(title: String, text: String, nodeId: String, novelId: String): Novel {
         val conn = setConnection("https://if.caiyunai.com/v2/novel/$userId/novel_ai")
 
@@ -33,9 +32,9 @@ object CaiyunApiService {
             it.writeChars(json.toString())
             it.flush()
         }
+
         conn.connect()
         conn.disconnect()
-
 
         val jsonStr = getString(conn.inputStream)
         val data = Json.decodeFromString<Data>(jsonStr).data
@@ -100,7 +99,7 @@ object CaiyunApiService {
         try {
             returnData = Json.decodeFromString(jsonStr)
             code = Json.decodeFromJsonElement(returnData.data)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             val caiyunStatus: CaiyunStatus = Json.decodeFromString(jsonStr)
             return caiyunStatus.message
         }

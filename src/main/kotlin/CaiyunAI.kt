@@ -41,7 +41,7 @@ object CaiyunAI : KotlinPlugin(
                         phoneNumber = this.message.content.toLong()
                         try {
                             codeId = sendVerification(phoneNumber)
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             subject.sendMessage(codeId)
                             return@default true
                         }
