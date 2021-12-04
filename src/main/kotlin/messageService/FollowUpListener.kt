@@ -1,17 +1,18 @@
-package org.laolittle.plugin.caiyun
+package org.laolittle.plugin.caiyun.messageService
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import net.mamoe.mirai.event.GlobalEventChannel
 import net.mamoe.mirai.event.subscribeGroupMessages
 import net.mamoe.mirai.event.whileSelectMessages
 import net.mamoe.mirai.message.data.content
+import org.laolittle.plugin.caiyun.Service
 import org.laolittle.plugin.caiyun.api.CaiyunApiService
 import org.laolittle.plugin.caiyun.api.CaiyunApiService.startWrite
 import org.laolittle.plugin.caiyun.model.Novel
 import org.laolittle.plugin.caiyun.utils.inActMember
 
 @ExperimentalSerializationApi
-object GroupMessageListener : Service() {
+object FollowUpListener : Service() {
     override suspend fun main() {
         GlobalEventChannel.subscribeGroupMessages {
             "续写" Start@{
@@ -28,8 +29,8 @@ object GroupMessageListener : Service() {
                         subject.sendMessage("请输入你想要续写的正文")
                         false
                     }
-                    timeout(20_000) {
-                        subject.sendMessage("超时")
+                    timeout(10_000) {
+                        subject.sendMessage("还没想好标题嘛？那直接输入正文也可以哦")
                         false
                     }
                 }
@@ -51,7 +52,7 @@ object GroupMessageListener : Service() {
                         false
                     }
                     timeout(120_000) {
-                        subject.sendMessage("超时")
+                        subject.sendMessage("正文没想好的话不能续写哦，等你想好了再叫我吧")
                         false
                     }
                 }
