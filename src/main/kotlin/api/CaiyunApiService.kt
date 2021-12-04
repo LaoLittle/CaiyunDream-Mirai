@@ -3,6 +3,7 @@ package org.laolittle.plugin.caiyun.api
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.*
+import org.laolittle.plugin.caiyun.Config.modelId
 import org.laolittle.plugin.caiyun.Config.userId
 import org.laolittle.plugin.caiyun.model.*
 import org.laolittle.plugin.caiyun.model.Json
@@ -12,15 +13,28 @@ import javax.net.ssl.HttpsURLConnection
 
 @ExperimentalSerializationApi
 object CaiyunApiService {
+    private const val BASE_URL = "https://if.caiyunai.com/v2"
+    fun getModels(): JsonArray {
+        val conn = URL("$BASE_URL/model/model_list").openConnection() as HttpsURLConnection
+        conn.setRequestProperty("Accept", "application/json, text/plain, */*")
+
+        conn.connect()
+        conn.disconnect()
+
+        val jsonStr = getString(conn.inputStream)
+        val data = Json.decodeFromString<Data>(jsonStr).data
+        return Json.decodeFromJsonElement<Map<String, JsonArray>>(data)["models"] ?: buildJsonArray {  }
+    }
+    
     fun startWrite(title: String, text: String, nodeId: String, novelId: String): Novel {
-        val conn = setConnection("https://if.caiyunai.com/v2/novel/$userId/novel_ai")
+        val conn = setConnection("$BASE_URL/novel/$userId/novel_ai")
 
         val out = DataOutputStream(conn.outputStream)
         val json = buildJsonObject {
             put("content", text)
             put("lang", "zh")
             put("lastnode", nodeId)
-            put("mid", "601f92f60c9aaf5f28a6f908")
+            put("mid", modelId)
             put("nid", novelId)
             put("ostype", "")
             put("status", "http")
@@ -43,7 +57,7 @@ object CaiyunApiService {
     }
 
     fun getNovelInfo(title: String, text: String, nodeId: Boolean, putNodes: JsonArray = buildJsonArray { }): String {
-        val conn = setConnection("https://if.caiyunai.com/v2/novel/$userId/novel_save")
+        val conn = setConnection("$BASE_URL/novel/$userId/novel_save")
 
         val out = DataOutputStream(conn.outputStream)
         val json = buildJsonObject {
@@ -74,7 +88,7 @@ object CaiyunApiService {
     }
 
     fun sendVerification(PhoneNumber: Long): String {
-        val conn = setConnection("https://if.caiyunai.com/v2/user/phone_message")
+        val conn = setConnection("$BASE_URL/user/phone_message")
 
         val out = DataOutputStream(conn.outputStream)
         val json = buildJsonObject {
@@ -107,7 +121,7 @@ object CaiyunApiService {
     }
 
     fun loginFromCode(codeId: String, code: Int, PhoneNumber: Long): String {
-        val conn = setConnection("https://if.caiyunai.com/v2/user/phone_login")
+        val conn = setConnection("$BASE_URL/user/phone_login")
 
         val out = DataOutputStream(conn.outputStream)
         val json = buildJsonObject {
