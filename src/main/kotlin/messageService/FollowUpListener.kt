@@ -4,11 +4,14 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import net.mamoe.mirai.event.GlobalEventChannel
 import net.mamoe.mirai.event.subscribeGroupMessages
 import net.mamoe.mirai.event.whileSelectMessages
+import net.mamoe.mirai.message.data.PlainText
+import net.mamoe.mirai.message.data.buildForwardMessage
 import net.mamoe.mirai.message.data.content
 import org.laolittle.plugin.caiyun.Service
 import org.laolittle.plugin.caiyun.api.CaiyunApiService
 import org.laolittle.plugin.caiyun.api.CaiyunApiService.startWrite
 import org.laolittle.plugin.caiyun.model.Novel
+import org.laolittle.plugin.caiyun.utils.CustomForwardMsgDisplay
 import org.laolittle.plugin.caiyun.utils.inActMember
 
 @ExperimentalSerializationApi
@@ -70,7 +73,9 @@ object FollowUpListener : Service() {
                                 return@Here false
                             }
                             novelMsg += novel.content
-                            subject.sendMessage(novelMsg)
+                            subject.sendMessage(buildForwardMessage(displayStrategy = CustomForwardMsgDisplay) {
+                                add(sender, PlainText(novelMsg))
+                            })
                             nodeId = novel.nodeId
                             false
                         }
