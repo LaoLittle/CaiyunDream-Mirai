@@ -50,6 +50,12 @@ data class CaiyunStatus(
     @SerialName("msg") val message: String,
 )
 
+@Serializable
+data class ModelInfo(
+    @SerialName("mid") val modelId: String,
+    @SerialName("name") val modelName: String
+)
+
 internal val Json = Json {
     prettyPrint = true
     ignoreUnknownKeys = true
