@@ -6,7 +6,7 @@ import net.mamoe.mirai.event.subscribeGroupMessages
 import net.mamoe.mirai.event.whileSelectMessages
 import net.mamoe.mirai.message.data.PlainText
 import net.mamoe.mirai.message.data.buildForwardMessage
-import net.mamoe.mirai.message.data.content
+import org.laolittle.plugin.caiyun.CaiyunAI
 import org.laolittle.plugin.caiyun.Service
 import org.laolittle.plugin.caiyun.api.CaiyunApiService
 import org.laolittle.plugin.caiyun.api.CaiyunApiService.startWrite
@@ -28,7 +28,7 @@ object FollowUpListener : Service() {
                 var title = ""
                 whileSelectMessages {
                     default {
-                        title = this.message.content
+                        title = it
                         subject.sendMessage("请输入你想要续写的正文")
                         false
                     }
@@ -39,7 +39,7 @@ object FollowUpListener : Service() {
                 }
                 whileSelectMessages {
                     default {
-                        val msg = this.message.content
+                        val msg = it
                         val novel: Novel
                         nodeId = CaiyunApiService.getNovelInfo(title, msg, true)
                         val nid = CaiyunApiService.getNovelInfo(title, msg, false)
@@ -47,6 +47,7 @@ object FollowUpListener : Service() {
                             novel = startWrite(title, msg, nodeId, nid)
                         } catch (e: Exception) {
                             subject.sendMessage("被玩坏了...这绝对不是我的错！绝对！")
+                            CaiyunAI.logger.error(e)
                             return@default false
                         }
                         novelMsg = msg + novel.content
@@ -70,6 +71,7 @@ object FollowUpListener : Service() {
                                 novel = startWrite(title, msg, nodeId, nid)
                             } catch (e: Exception) {
                                 subject.sendMessage("被玩坏了...这绝对不是我的错！绝对！")
+                                CaiyunAI.logger.error(e)
                                 return@Here false
                             }
                             novelMsg += novel.content

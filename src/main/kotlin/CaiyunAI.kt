@@ -3,14 +3,8 @@ package org.laolittle.plugin.caiyun
 import kotlinx.serialization.ExperimentalSerializationApi
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
-import net.mamoe.mirai.event.GlobalEventChannel
-import net.mamoe.mirai.event.subscribeFriendMessages
-import net.mamoe.mirai.event.whileSelectMessages
-import net.mamoe.mirai.message.data.content
 import net.mamoe.mirai.utils.info
 import org.laolittle.plugin.caiyun.Config.userId
-import org.laolittle.plugin.caiyun.api.CaiyunApiService.loginFromCode
-import org.laolittle.plugin.caiyun.api.CaiyunApiService.sendVerification
 import org.laolittle.plugin.caiyun.messageService.FollowUpListener
 import org.laolittle.plugin.caiyun.messageService.LoginService
 import org.laolittle.plugin.caiyun.messageService.ModelSwitchListener
