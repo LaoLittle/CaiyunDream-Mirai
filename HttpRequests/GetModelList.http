@@ -1,4 +1,4 @@
 GET https://if.caiyunai.com/v2/model/model_list
-Accept: application/json, text/plain, */*
+
 
 ###

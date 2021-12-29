@@ -5,8 +5,8 @@ import kotlinx.serialization.json.*
 import org.laolittle.plugin.caiyun.Config.modelId
 import org.laolittle.plugin.caiyun.Config.userId
 import org.laolittle.plugin.caiyun.model.*
-import org.laolittle.plugin.caiyun.utils.KtorHttpUtil.get
-import org.laolittle.plugin.caiyun.utils.KtorHttpUtil.post
+import org.laolittle.plugin.caiyun.utils.KtorOkHttp.get
+import org.laolittle.plugin.caiyun.utils.KtorOkHttp.post
 
 @ExperimentalSerializationApi
 object CaiyunApiService {
