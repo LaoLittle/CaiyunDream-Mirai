@@ -15,7 +15,7 @@ object CaiyunAI : KotlinPlugin(
     JvmPluginDescription(
         id = "org.laolittle.plugin.caiyun.CaiyunAI",
         name = "CaiyunAI",
-        version = "1.0.2",
+        version = "1.0.5",
     ) {
         author("LaoLittle")
     }

@@ -7,9 +7,12 @@ plugins {
 }
 
 group = "org.laolittle.plugin.caiyun"
-version = "1.0.2"
+version = "1.0.5"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
-    mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+        name = "ktor-eap"
+    }
 }
