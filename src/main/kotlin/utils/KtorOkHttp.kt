@@ -36,7 +36,7 @@ object KtorOkHttp {
         OkHttpClient.Builder()
         val okHttpEngine = OkHttp.config {
             config {
-                readTimeout(30_000, TimeUnit.MILLISECONDS)
+                readTimeout(30, TimeUnit.SECONDS)
             }
         }
         client = HttpClient(okHttpEngine)
