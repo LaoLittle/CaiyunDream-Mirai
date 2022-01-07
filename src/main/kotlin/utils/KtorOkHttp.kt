@@ -5,7 +5,6 @@ import io.ktor.client.engine.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.request.*
 import kotlinx.serialization.json.JsonElement
-import okhttp3.OkHttpClient
 import org.laolittle.plugin.caiyun.model.Json
 import java.util.concurrent.TimeUnit
 
@@ -33,7 +32,6 @@ object KtorOkHttp {
     }
 
     init {
-        OkHttpClient.Builder()
         val okHttpEngine = OkHttp.config {
             config {
                 readTimeout(30, TimeUnit.SECONDS)
